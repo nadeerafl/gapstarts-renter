@@ -17,7 +17,7 @@ class Planing
 
         $db     = Database::getInstance();
         $mysqli = $db->getConnection(); 
-        $result     = $mysqli->query("CALL is_eq_available('".$start_date."', '".$end_date."', $equipment_id, $quantity)");
+        $result     = $mysqli->query("CALL 	is_equipment_available('".$start_date."', '".$end_date."', $equipment_id, $quantity)");
         $result_arr = $result->fetch_array();
         return $result_arr['available'] ? true : false;
     }
