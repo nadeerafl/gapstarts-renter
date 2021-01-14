@@ -1,20 +1,24 @@
 <?php
-include 'EquimentAvailabilityHelper.php';
-include 'Validation.php';
-require_once ('Format.php');
+include 'src/EquimentAvailabilityHelper.php';
+include 'src/Helpers/Validation.php';
+require_once ('src/Helpers/Format.php');
+require_once ('src/Helpers/Response.php');
+include 'vendor/autoload.php';
 
-//$mysqli->next_result();
+// Format parameters object
+$format         = new Format();
+// Response parameters object
+$response       = new Response();
+
+$query_param    = $_GET;
+
+// Validate Parameters
+$validate       = new Validation();
+// Check if a valid route
+$is_valid_route = $validate->isValidRoute($query_param);
 
 // Prepare validation array
 $validation_array = array (
-    'equipment_id'  =>  array(
-                            'required'  => 'yes',
-                            'type'      => 'int',
-                        ),
-    'quantity'      =>  array(
-                            'required'  => 'yes',
-                            'type'      => 'int'
-                        ),
     'start'         => array(
                             'required'  => 'yes',
                             'type'      => 'date'
@@ -23,29 +27,70 @@ $validation_array = array (
                             'required'  => 'yes',
                             'type'      => 'date'
                         ),
+    'route'         => array(
+                            'required'  => 'yes',
+                            'type'      => 'string'
+                        ),
 );
 
-$query_param = $_GET;
+// Additional param for checkavailability
+if ($is_valid_route == true && $_GET['route'] == 'availability') {
+    $validation_array['equipment_id']   =   array(
+                                                'required'  => 'yes',
+                                                'type'      => 'int',
+                                            );
 
-// Validate Parameters
-$validate       = new Validation();
+    $validation_array['quantity']       =   array(
+                                                'required'  => 'yes',
+                                                'type'      => 'int',
+                                            );
+}
+
+// Validate param
 $errors         = $validate->validateParam($query_param, $validation_array);
 
+// If error found, return error and exit from the stript
+if (!empty($errors)) {
+    $response->errorResponse($errors);
+}
 
-// Format parameters
-$format             = new Format();
+// Format Param
 $formatted_array    = $format->formatParam($query_param, $validation_array);
-//var_dump($formatted_array);
-
-// $planing = new Planing();
-// $planing->getAvailability();
 
 $equpment_availability_helper = new EquimentAvailabilityHelper();
-// Get availability
-$is_available = $equpment_availability_helper->isAvailable( 
-                                                            $formatted_array['equipment_id'], 
-                                                            $formatted_array['quantity'], 
-                                                            $formatted_array['start'], 
-                                                            $formatted_array['end']);
-var_dump($is_available);
+
+if ($_GET['route'] == 'availability') {
+    // Get availability
+    $is_available = $equpment_availability_helper->isAvailable  ( 
+                                                                    $formatted_array['equipment_id'], 
+                                                                    $formatted_array['quantity'], 
+                                                                    $formatted_array['start'], 
+                                                                    $formatted_array['end']
+                                                                );
+    
+    if ($is_available == true) {
+        // Prepare result
+        $result_arr = array('availabiliy' => true);
+        $response->successResponse($result_arr);
+    } else {
+        // Prepare result
+        $result_arr = array('availabiliy' => false);
+        $response->successResponse($result_arr);
+    }
+
+} else if ($_GET['route'] == 'shortage') {
+    // Get availability
+    $shortage_arr   = $equpment_availability_helper->getShortages(  
+                                                                    $formatted_array['start'], 
+                                                                    $formatted_array['end']
+                                                                );
+
+    $response->successResponse($shortage_arr);
+} else {
+    // INvalid route
+    $errors = array('message' => 'Invalid route');
+    $response->errorResponse($errors);
+}
+
+
 ?>
