@@ -1,4 +1,4 @@
-URL - ?equipment_id=1&quantity=1&start=2019-05-30&end=2019-06-04
+Test URL - index.php?equipment_id=1&quantity=1&start=2019-05-30&end=2019-06-04
 
 ##Stored Procedure##
 DELIMITER $$
