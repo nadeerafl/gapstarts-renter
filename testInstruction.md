@@ -3,8 +3,9 @@
 
 ## URL to test application
 index.php?equipment_id=1&quantity=1&start=2019-05-30&end=2019-06-04
+- Unit test is located in `tests` folder
 
-### Hint 1 
+### Hint
 - Makesure to use date format as Y-m-d `2019-05-30`
 - Run bellow command to add indexing to the table
 ```ALTER TABLE `assessment`.`planning` 
