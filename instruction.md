@@ -12,13 +12,10 @@ ADD INDEX `end_index`(`end`)```
 
 ## URL to test application
 - Test Availability
-
-`index.php?route=availability&equipmefnt_id=2&quantity=1&start=2019-05-30&end=2019-06-04`
+`index.php?route=availability&equipment_id=2&quantity=1&start=2019-05-30&end=2019-06-04`
 
 - Test Shortage
-
 `index.php?route=shortage&start=2019-05-01&end=2019-05-30`
-
 
 
 ### Hint
