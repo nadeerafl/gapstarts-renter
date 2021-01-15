@@ -6,6 +6,10 @@ require_once ('src/Helpers/Response.php');
 include 'vendor/autoload.php';
 // Please see `tests` folder for test cases
 
+/*
+All responses are formatted as JSON to use in a API
+*/
+
 // Format parameters object
 $format         = new Format();
 // Response parameters object
