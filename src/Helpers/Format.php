@@ -3,7 +3,13 @@ class Format
 {
     public $formatted_feilds = array();
 
-    public function formatParam(array $param_array,array $validation_fields) : array 
+    /**
+     * Format param by type
+     * @param   Array $param_array          GET value array
+     * @param   Array $validation_fields    validation rule array
+     * @return  Array Formatted value array
+     */
+    public function formatParam(array $param_array, array $validation_fields) : array 
     {
         foreach($validation_fields as $param_key => $rule)
         {
@@ -15,6 +21,12 @@ class Format
         return $this->formatted_feilds;
     }
 
+    /**
+     * Format the value as per the type
+     * @param   String  $value          Value to format
+     * @param   String  $type           Formating type 
+     * @param   String  $param_name     Param name 
+     */
     public function formatValue($value, $type, $param_name)
     {
         if ($type == 'int') {
@@ -54,5 +66,11 @@ class Format
     {
         $num = -1 * abs($num);
         return $num; 
+    }
+
+    public function formatForDateObject($date)
+    {
+        $date = new DateTime($date);
+        return $date;
     }
 }

@@ -4,6 +4,7 @@ include 'src/Helpers/Validation.php';
 require_once ('src/Helpers/Format.php');
 require_once ('src/Helpers/Response.php');
 include 'vendor/autoload.php';
+// Please see `tests` folder for test cases
 
 // Format parameters object
 $format         = new Format();
@@ -52,6 +53,7 @@ $errors         = $validate->validateParam($query_param, $validation_array);
 // If error found, return error and exit from the stript
 if (!empty($errors)) {
     $response->errorResponse($errors);
+    die();
 }
 
 // Format Param
@@ -72,10 +74,12 @@ if ($_GET['route'] == 'availability') {
         // Prepare result
         $result_arr = array('availabiliy' => true);
         $response->successResponse($result_arr);
+        die();
     } else {
         // Prepare result
         $result_arr = array('availabiliy' => false);
         $response->successResponse($result_arr);
+        die();
     }
 
 } else if ($_GET['route'] == 'shortage') {
@@ -86,10 +90,12 @@ if ($_GET['route'] == 'availability') {
                                                                 );
 
     $response->successResponse($shortage_arr);
+    die();
 } else {
     // INvalid route
     $errors = array('message' => 'Invalid route');
     $response->errorResponse($errors);
+    die();
 }
 
 

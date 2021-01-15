@@ -18,6 +18,7 @@ class Equipment
 
     /**
      * Get all equipments array 
+     * @return equipment object
      */
     public function getAllEquipments()
     {   
@@ -27,6 +28,10 @@ class Equipment
 
     /**
      * Get shortage of a equipment for given period
+     * @param int      $equipment_id Id of the equipment item
+	 * @param DateTime $start Start of time window
+	 * @param DateTime $end End of time window
+	 * @return INT     shotage if available, 0 otherwise
      */
     public function getShortageOfEquipment(int $equipment_id, DateTime $start, DateTime $end) : INT
     {   

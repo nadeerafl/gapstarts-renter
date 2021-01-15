@@ -63,6 +63,7 @@ class EquimentAvailabilityHelper {
 			'5' => -1,
         );
         */
-	}
+    }
+
 
 }
