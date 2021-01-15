@@ -11,7 +11,14 @@ ADD INDEX `end_index`(`end`)```
 - Unit test is located in `tests` folder
 
 ## URL to test application
-index.php?equipment_id=1&quantity=1&start=2019-05-30&end=2019-06-04
+- Test Availability
+
+`index.php?route=availability&equipmefnt_id=2&quantity=1&start=2019-05-30&end=2019-06-04`
+
+- Test Shortage
+
+`index.php?route=shortage&start=2019-05-01&end=2019-05-30`
+
 
 
 ### Hint
